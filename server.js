@@ -1,20 +1,20 @@
 const express = require('express');
-const { sequelize, User, Msg, Channel } = require('./model/models');
+const { sequelize} = require('./database/db');
 
 // Créez une instance d'application Express
 const app = express();
 
 // Synchronisez les modèles avec la base de données
-sequelize.authenticate().catch((err)=>console.log({err}) )
+/*sequelize.sync()
   .then(() => {
-    console.log('Connection has been established successfully.');
+    console.log('Base de données synchronisée');
   })
   .catch(err => {
-    console.error('Unable to connect to the database:', err);
-  });
+    console.error('Erreur lors de la synchronisation de la base de données :', err);
+  });*/
 
 
 // Démarrez le serveur
-app.listen(3000, () => {
-  console.log('Le serveur est en écoute sur le port 3000');
+app.listen(3001, () => {
+  console.log('Le serveur est en écoute sur le port 3001');
 });
