@@ -1,22 +1,40 @@
-
-const Sequelize = require('sequelize');
-const sequelize = require('../database/db');
-const User = require('./User');
-const Msg = require('./Message');
-const Channel = sequelize.define('Channel', {
-    idChannel: {
-      type: Sequelize.INTEGER,
-      primaryKey: true,
-      autoIncrement: true
-    },
-    type: {
-      type: Sequelize.ENUM('private', 'public'),
-      allowNull: false
+'use strict';
+const { Model } = require('sequelize');
+module.exports = (sequelize, DataTypes) => {
+  class Channel extends Model {
+    static associate({ User }) {
+      this.belongsTo(User, {
+        foreignKey: 'admin',
+        as: 'adminUser',
+      });
     }
-  });
-  // Relation entre Channel et Msg (un Channel peut avoir plusieurs Msgs)
-Channel.hasMany(Msg, { foreignKey: 'idChannel' });
-Channel.belongsToMany(User, { through: 'UserChannel', foreignKey: 'idChannel' });
+  }
 
-
-  module.exports=Channel
+  Channel.init(
+    {
+      name: {
+        type: DataTypes.STRING,
+        validate: {
+          max: 30,
+          min: 3,
+        },
+      },
+      admin: {
+        type: DataTypes.INTEGER,
+      },
+      type: {
+        type: DataTypes.ENUM('public', 'private', 'group'),
+        allowNull: false,
+      },
+     /* participants: {
+        type: DataTypes.ARRAY(DataTypes.INTEGER),
+      },*/
+    },
+    {
+      sequelize,
+      modelName: 'Channel',
+      tableName: 'Channel',
+    }
+  );
+  return Channel;
+};
