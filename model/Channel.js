@@ -26,9 +26,19 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.ENUM('public', 'private', 'group'),
         allowNull: false,
       },
-     /* participants: {
-        type: DataTypes.ARRAY(DataTypes.INTEGER),
-      },*/
+      participants: {
+        type: DataTypes.STRING,
+        allowNull: false,
+        defaultValue: '', // Default empty string
+        get() {
+          // Convert the comma-separated string to an array of integers
+          return this.getDataValue('participants').split(',').map(Number);
+        },
+        set(value) {
+          // Convert the array of integers to a comma-separated string
+          this.setDataValue('participants', value.join(','));
+        },
+    },
     },
     {
       sequelize,
