@@ -1,4 +1,4 @@
-const { User, Message, Channel } = require('../../models');
+const { User, Message, Channel } = require('../../model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { Op } = require('sequelize');
@@ -64,14 +64,14 @@ module.exports = {
         throw new UserInputError(Object.values(errors)[0], { errors });
       }
 
-     /* const existingUser = await User.findOne({
+ const existingUser = await User.findOne({
         where: { username: { [Op.iLike]: username } },
       });
 
       if (existingUser) {
         throw new UserInputError(`Username '${username}' is already taken.`);
       }
-*/
+
       const saltRounds = 10;
       const passwordHash = await bcrypt.hash(password, saltRounds);
 

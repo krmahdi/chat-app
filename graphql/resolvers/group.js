@@ -1,4 +1,4 @@
-const { Channel, User, Message } = require('../../models');
+const { Channel, User, Message } = require('../../model');
 const { Op } = require('sequelize');
 const { UserInputError } = require('apollo-server');
 const authChecker = require('../../utils/authChecker');

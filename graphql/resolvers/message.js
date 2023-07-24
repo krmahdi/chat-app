@@ -1,4 +1,4 @@
-const { Message, Channel, User } = require('../../models');
+const { Message, Channel, User } = require('../../model');
 const { Op } = require('sequelize');
 const { UserInputError } = require('apollo-server');
 const {PubSub,withFilter}=require('graphql-subscriptions');
