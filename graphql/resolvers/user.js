@@ -1,7 +1,7 @@
 const { User, Message, Channel } = require('../../model');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { Op } = require('sequelize');
+const Sequelize=require('sequelize')
 const { UserInputError } = require('apollo-server');
 const { registerValidator, loginValidator } = require('../../utils/validators');
 const authChecker = require('../../utils/authChecker');
@@ -65,7 +65,7 @@ module.exports = {
       }
 
  const existingUser = await User.findOne({
-        where: { username: { [Op.iLike]: username } },
+        where: { username: { [Sequelize.Op.like]: username } },
       });
 
       if (existingUser) {
@@ -103,7 +103,7 @@ module.exports = {
       }
 
       const user = await User.findOne({
-        where: { username: { [Op.iLike]: username } },
+        where: { username: { [Sequelize.Op.like]: username } },
       });
 
       if (!user) {
