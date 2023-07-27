@@ -6,7 +6,7 @@ const Sequelize = require('sequelize');
 const basename = path.basename(__filename);
 const db = {};
 let sequelize;
- sequelize = new Sequelize('chaty', 'root', 'password', {
+ sequelize = new Sequelize('chatfor', 'root', 'password', {
   host: 'localhost',
   dialect: 'mysql'
 });
