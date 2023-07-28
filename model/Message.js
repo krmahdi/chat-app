@@ -14,6 +14,13 @@ module.exports = (sequelize, DataTypes) => {
         as: 'user',
       });
     }
+    toJSON() {
+      const values = Object.assign({}, this.get());
+      delete values.createdAt;
+      delete values.updatedAt;
+      return values;
+    }
+
   }
   Message.init(
     {
@@ -24,7 +31,7 @@ module.exports = (sequelize, DataTypes) => {
           notEmpty: true,
         },
       },
-      ChannelId: {
+      channelId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },

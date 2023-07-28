@@ -4,6 +4,7 @@ const { UserInputError } = require('apollo-server');
 const {PubSub,withFilter}=require('graphql-subscriptions');
 const authChecker = require('../../utils/authChecker');
 const pubsub = new PubSub();
+const { Sequelize } = require('sequelize');
 
 module.exports = {
   Query: {
@@ -159,7 +160,7 @@ module.exports = {
           where: {
             [Op.and]: [
               { type: 'private' },
-              { participants: { [Op.contains]: [loggedUser.id, receiverId] } },
+              Sequelize.literal(`CONCAT(',', participants, ',') LIKE '%,${loggedUser.id},%'`),
             ],
           },
         });
@@ -168,13 +169,19 @@ module.exports = {
           const newChannel = new Channel({
             type: 'private',
             participants: [loggedUser.id, receiverId],
+           
           });
 
           channel = await newChannel.save();
         }
-
+        console.log(channel.id)
+    
+        if (!channel || !channel.id) {
+          console.log('Failed to fetch or create the channel.');
+        }
         const newMessage = await Message.create({
-          channelId: channel.id,
+
+          ChannelId: channel.id,
           senderId: loggedUser.id,
           body,
         });
@@ -220,19 +227,18 @@ module.exports = {
             'Access is denied. Only members of the group can send messages.'
           );
         }
+        console.log(channelId)
 
-        const newMessage = await Message.create({
-          channelId,
+        const newMessage =  Message.create({
+       channelId,
           senderId: loggedUser.id,
           body,
         });
-
+console.log(newMessage.ChannelId)
         pubsub.publish('NEW_MESSAGE', {
           newMessage: {
-            message: {
-              ...newMessage.toJSON(),
-              user: { id: loggedUser.id, username: loggedUser.username },
-            },
+            newMessage,
+
             type: 'group',
             participants: groupChannel.participants,
           },
