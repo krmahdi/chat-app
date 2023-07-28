@@ -2,6 +2,7 @@ const { Channel, User, Message } = require('../../model');
 const { Op } = require('sequelize');
 const { UserInputError } = require('apollo-server');
 const authChecker = require('../../utils/authChecker');
+const { Sequelize } = require('sequelize');
 
 module.exports = {
   Query: {
@@ -13,9 +14,7 @@ module.exports = {
           where: {
             [Op.and]: [
               { type: 'group' },
-              {
-                participants: { [Op.contains]: [loggedUser.id] },
-              },
+              Sequelize.literal(`CONCAT(',', participants, ',') LIKE '%,${loggedUser.id},%'`),
             ],
           },
           include: [
@@ -35,9 +34,9 @@ module.exports = {
               where: {
                 [Op.and]: [
                   { type: 'group' },
-                  {
-                    participants: { [Op.contains]: [loggedUser.id] },
-                  },
+                  
+                    Sequelize.literal(`CONCAT(',', participants, ',') LIKE '%,${loggedUser.id},%'`),
+                
                 ],
               },
               attributes: [],
