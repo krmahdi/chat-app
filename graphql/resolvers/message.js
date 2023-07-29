@@ -181,7 +181,7 @@ module.exports = {
         }
         const newMessage = await Message.create({
 
-          ChannelId: channel.id,
+          channelId: channel.id,
           senderId: loggedUser.id,
           body,
         });
