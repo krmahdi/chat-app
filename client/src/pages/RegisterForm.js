@@ -87,7 +87,7 @@ const RegisterForm = () => {
     <Container>
       <div className={classes.root}>
         <Typography variant="h4" color="secondary" className={classes.title}>
-          Welcome to <strong>LesChat!</strong>
+          Welcome to <strong>TekruChat!</strong>
         </Typography>
         <form onSubmit={handleSubmit(onRegister)} className={classes.form}>
           <div className={classes.inputField}>

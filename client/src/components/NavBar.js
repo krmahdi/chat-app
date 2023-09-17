@@ -58,7 +58,7 @@ const NavBar = () => {
                   alt="leschat-logo"
                   className={classes.svgImage}
                 />
-                LesChat!
+                TekruChat!
               </Button>
               {!isMobile && (
                 <Typography variant="caption" color="secondary">
