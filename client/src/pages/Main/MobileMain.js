@@ -1,6 +1,5 @@
 import { useState } from 'react';
 import TabBar from '../../components/TabBar';
-import LatestMessages from './LatestMessages';
 import Users from './Users';
 import Groups from './Groups';
 import Conversation from './Conversation';
@@ -16,9 +15,7 @@ const MobileMain = () => {
         <div>
           <TabBar tab={tab} setTab={setTab} />
           <div>
-            {tab === 'chat' ? (
-              <LatestMessages />
-            ) : tab === 'users' ? (
+            {tab === 'users' ? (
               <Users />
             ) : (
               <Groups />

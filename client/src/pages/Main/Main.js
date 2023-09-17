@@ -18,9 +18,7 @@ const Main = () => {
           <TabBar tab={tab} setTab={setTab} />
           <div className={classes.leftPanelContent}>
             {
-            // tab === 'chat' ? (
-            //   <LatestMessages />
-            // ) :
+           
              tab === 'users' ? (
               <Users />
             ) : (
