@@ -1,0 +1,38 @@
+name: CI/CD for Node.js and React Tekru chat 
+
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 14
+
+      - name: Install Backend Dependencies
+        run: |
+          cd server
+          npm install
+
+      - name: Build Backend
+        run: |
+          cd server
+          npm run build
+
+      - name: Install Frontend Dependencies
+        run: |
+          cd client
+          npm install
+
+      - name: Build Frontend
+        run: |
+          cd client
+          npm run build
